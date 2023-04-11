@@ -4,6 +4,7 @@ const {
   getProducts,
   getProduct,
   deleteProduct,
+  updateProduct,
 } = require('../../controller/product');
 
 const { check } = require('express-validator');
@@ -14,6 +15,11 @@ const router = express.Router();
 // @desc Get all products
 // @access public
 router.get('/', getProducts);
+
+// @route GET api/products/:id
+// @desc Get a product by id
+// @access public
+router.get('/:id', getProduct);
 
 // @route Post api/products
 // @desc Create a product
@@ -28,14 +34,14 @@ router.post(
   addProduct
 );
 
-// @route GET api/products/:id
-// @desc Get a product by id
-// @access public
-router.get('/:id', getProduct);
-
 // @route DELETE api/products/:id
 // @desc Delete a product by id
 // @access private
 router.delete('/:id', deleteProduct);
+
+// @route PATCH api/products/:id
+// @desc Update a product by id
+// @access private
+router.patch('/:id', updateProduct);
 
 module.exports = router;

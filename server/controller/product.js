@@ -43,6 +43,26 @@ module.exports.getProduct = async (req, res) => {
   }
 };
 
+module.exports.updateProduct = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updatedProduct = await Product.findByIdAndUpdate(
+      id,
+      {
+        $set: req.body,
+      },
+      {
+        new: true,
+      }
+    );
+
+    res.json(updatedProduct);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Server Error');
+  }
+};
+
 module.exports.deleteProduct = async (req, res) => {
   try {
     const id = req.params.id;
