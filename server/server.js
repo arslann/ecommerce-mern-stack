@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 // Routes import
 const products = require('./routes/api/products');
 const users = require('./routes/api/users');
+const auth = require('./routes/api/auth');
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.get('/', (req, res) => res.send('API RUNNING'));
 // Routes
 app.use('/api/products', products);
 app.use('/api/users', users);
+app.use('/api/auth', auth);
 
 const PORT = process.env.PORT || 5000;
 
