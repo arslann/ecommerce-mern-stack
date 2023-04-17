@@ -8,6 +8,8 @@ const {
 } = require('../../controller/product');
 
 const { check } = require('express-validator');
+const auth = require('../../middleware/auth');
+const isAdmin = require('../../middleware/adminAuth');
 
 const router = express.Router();
 
@@ -26,6 +28,7 @@ router.get('/:id', getProduct);
 // @access private
 router.post(
   '/',
+  [auth,isAdmin],
   [
     check('title', 'Please include a title').notEmpty(),
     check('description', 'Please include description').notEmpty(),
@@ -37,11 +40,11 @@ router.post(
 // @route DELETE api/products/:id
 // @desc Delete a product by id
 // @access private
-router.delete('/:id', deleteProduct);
+router.delete('/:id', auth, deleteProduct);
 
 // @route PATCH api/products/:id
 // @desc Update a product by id
 // @access private
-router.patch('/:id', updateProduct);
+router.patch('/:id', auth, updateProduct);
 
 module.exports = router;
