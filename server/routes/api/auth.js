@@ -4,11 +4,12 @@ const auth = require('../../middleware/auth');
 
 const { testAuth, loginUser } = require('../../controller/auth');
 const { check } = require('express-validator');
+const adminAuth = require('../../middleware/adminAuth');
 
 // @route GET api/auth
 // @desc Test route
 // @access public
-router.get('/', auth, testAuth);
+router.get('/', [auth, adminAuth], testAuth);
 
 // @route POST api/auth
 // @desc Login user
