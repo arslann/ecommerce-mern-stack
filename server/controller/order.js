@@ -46,7 +46,7 @@ module.exports.createOrder = async (req, res) => {
     });
 
     req.body.products.forEach((productId) => {
-      newOrder.products.unshift({product:productId})
+      newOrder.products.unshift({ product: productId });
     });
 
     res.json(newOrder);
@@ -56,4 +56,17 @@ module.exports.createOrder = async (req, res) => {
   }
 };
 
-module.exports.deleteOrder = async (req, res) => {};
+module.exports.deleteOrder = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    await Order.findByIdAndDelete(id);
+
+    res.status(200).json({
+      message: 'Order is deleted successfully.',
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Server Error');
+  }
+};
