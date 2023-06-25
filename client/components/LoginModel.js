@@ -74,7 +74,12 @@ const LoginModal = () => {
             </h2>
 
             {/* Show submit errors */}
-            {error && error.map((err) => <p key={err.msg}>{err.msg}</p>)}
+            {error &&
+              error.map((err) => (
+                <p className="text-red-500 font-bold" key={err.msg}>
+                  {err.msg}
+                </p>
+              ))}
 
             <label htmlFor="email" className="text-[#282828]">
               Email address *

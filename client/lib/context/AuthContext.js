@@ -15,9 +15,9 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const response = await instance.post('/api/auth', { email, password });
+      console.log(response.data.token);
       setUser(response.data.user);
     } catch (error) {
-      console.log(error.response.data.errors);
       setError(error.response.data.errors);
     }
   };
