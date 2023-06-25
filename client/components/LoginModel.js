@@ -2,6 +2,8 @@
 import React, { useContext, useState } from 'react';
 import styles from './LoginModal.css';
 import { AuthContext } from '@/lib/context/AuthContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '@/redux/authSlice';
 
 const LoginModal = () => {
   const [email, setEmail] = useState('');
@@ -9,7 +11,8 @@ const LoginModal = () => {
   const [isRegisterFormActive, setIsRegisterFormActive] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(false); // New state for fade-in animation
 
-  const { login, error } = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const error = useSelector((state) => state.auth.error);
 
   // Get form inputs
   const handleInputChange = (e) => {
@@ -29,7 +32,7 @@ const LoginModal = () => {
     e.preventDefault();
 
     try {
-      await login(email, password);
+      dispatch(login({ email, password }));
     } catch (error) {
       console.error('Login failed:', error);
     }
@@ -42,7 +45,11 @@ const LoginModal = () => {
 
   // fade-in animation toggle
   const handleAnimation = () => {
-    setIsFormVisible(!isFormVisible);
+    setIsFormVisible(true);
+
+    setTimeout(() => {
+      setIsFormVisible(false);
+    }, 500);
   };
 
   return (
@@ -67,7 +74,7 @@ const LoginModal = () => {
             className={`flex flex-col gap-3 ${
               isFormVisible ? 'animate-fade-in' : '' // Apply fade-in animation class conditionally
             }`}
-            onAnimationEnd={handleAnimation}
+            // onAnimationEnd={handleAnimation}
           >
             <h2 className="mt-4 font-bold self-center text-2xl mb-4">
               {isRegisterFormActive ? 'Register' : 'Sign In'}
@@ -75,11 +82,7 @@ const LoginModal = () => {
 
             {/* Show submit errors */}
             {error &&
-              error.map((err) => (
-                <p className="text-red-500 font-bold" key={err.msg}>
-                  {err.msg}
-                </p>
-              ))}
+              error.map((err) => <p className="text-red-600">{err.msg}</p>)}
 
             <label htmlFor="email" className="text-[#282828]">
               Email address *
@@ -102,7 +105,7 @@ const LoginModal = () => {
               className="border-2 border-gray-400 py-2 px-3 focus-visible:outline-none"
             />
             <button
-              type="submit"
+              type="button"
               onClick={handleSubmit}
               className="btn btn-block bg-black text-white hover:bg-[#282828] mt-4"
             >

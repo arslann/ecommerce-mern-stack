@@ -1,7 +1,7 @@
 import './globals.css';
 
 import Navbar from '../components/Navbar';
-import { AuthProvider } from '@/lib/context/AuthContext';
+import { Providers } from '@/redux/provider';
 
 export const metadata = {
   title: 'Create Next App',
@@ -12,12 +12,14 @@ export default function RootLayout({ children }) {
   return (
     <html data-theme="light" lang="en">
       <body>
-        <AuthProvider>
-          <div className="container mx-auto">
-            <Navbar />
-            {children}
-          </div>
-        </AuthProvider>
+        <Providers>
+
+            <div className="container mx-auto">
+              <Navbar />
+              {children}
+            </div>
+
+        </Providers>
       </body>
     </html>
   );
