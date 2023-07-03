@@ -1,5 +1,5 @@
 'use client';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styles from './LoginModal.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, register } from '@/redux/authSlice';
@@ -13,6 +13,7 @@ const LoginModal = () => {
 
   const dispatch = useDispatch();
   const error = useSelector((state) => state.auth.error);
+  const user = useSelector((state) => state.auth.user);
 
   // Get form inputs
   const handleInputChange = (e) => {
@@ -30,8 +31,17 @@ const LoginModal = () => {
     }
   };
 
+  // Close form after successful attempt
+  useEffect(() => {
+    if (!user) return;
+
+    setTimeout(() => {
+      window.my_modal_3.close();
+    }, 1500); // 1.5 seconds delay
+  }, [user]);
+
   // Make request to backend
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     try {
@@ -45,7 +55,7 @@ const LoginModal = () => {
     }
   };
 
-  // toggle form registration or sign in
+  // toggle form between registration or login
   const handleRegisterClick = () => {
     setIsRegisterFormActive(!isRegisterFormActive);
   };
@@ -86,6 +96,16 @@ const LoginModal = () => {
             <h2 className="mt-4 font-bold self-center text-2xl mb-4">
               {isRegisterFormActive ? 'Register' : 'Sign In'}
             </h2>
+
+            {/* logged in message */}
+            {user && isRegisterFormActive && (
+              <p className="text-green-600 font-bold">Account Created</p>
+            )}
+
+            {/* user created message */}
+            {user && !isRegisterFormActive && (
+              <p className="text-green-600 font-bold">Successfully logged in</p>
+            )}
 
             {/* Show submit errors */}
             {error &&
