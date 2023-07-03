@@ -1,13 +1,13 @@
 'use client';
 import React, { useContext, useState } from 'react';
 import styles from './LoginModal.css';
-import { AuthContext } from '@/lib/context/AuthContext';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '@/redux/authSlice';
+import { login, register } from '@/redux/authSlice';
 
 const LoginModal = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const [isRegisterFormActive, setIsRegisterFormActive] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(false); // New state for fade-in animation
 
@@ -21,6 +21,9 @@ const LoginModal = () => {
       case 'email':
         setEmail(value);
         break;
+      case 'name':
+        setName(value);
+        break;
       case 'password':
         setPassword(value);
         break;
@@ -32,7 +35,11 @@ const LoginModal = () => {
     e.preventDefault();
 
     try {
-      dispatch(login({ email, password }));
+      if (isRegisterFormActive) {
+        dispatch(register({ email, name, password }));
+      } else {
+        dispatch(login({ email, password }));
+      }
     } catch (error) {
       console.error('Login failed:', error);
     }
@@ -94,6 +101,21 @@ const LoginModal = () => {
               onChange={handleInputChange}
               className="border-2 border-gray-400 py-2 px-3 focus-visible:outline-none"
             />
+            {isRegisterFormActive && (
+              <>
+                <label htmlFor="name" className="text-[#282828]">
+                  Name *
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={name}
+                  onChange={handleInputChange}
+                  className="border-2 border-gray-400 py-2 px-3 focus-visible:outline-none"
+                />
+              </>
+            )}
+
             <label htmlFor="password" className="text-[#282828]">
               Password *
             </label>
