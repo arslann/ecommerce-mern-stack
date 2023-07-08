@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styles from './LoginModal.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, register } from '@/redux/authSlice';
+import { login, register, logout } from '@/redux/authSlice';
 
 const LoginModal = () => {
   const [email, setEmail] = useState('');
@@ -69,14 +69,28 @@ const LoginModal = () => {
     }, 500);
   };
 
+  const handleSignOut = () => {
+    dispatch(logout());
+  };
+
   return (
     <div>
-      <button
-        className="w-max bg-white border-none text-[#686868] hover:text-black"
-        onClick={() => window.my_modal_3.showModal()}
-      >
-        Sign In
-      </button>
+      {user === null ? (
+        <button
+          className="w-max bg-white border-none text-[#686868] hover:text-black"
+          onClick={() => window.my_modal_3.showModal()}
+        >
+          Sign In
+        </button>
+      ) : (
+        <button
+          className="w-max bg-white border-none text-[#686868] hover:text-black"
+          onClick={() => handleSignOut()}
+        >
+          Sign Out
+        </button>
+      )}
+
       <dialog id="my_modal_3" className="modal">
         <form method="dialog" className={`modal-box flex flex-col`}>
           <button

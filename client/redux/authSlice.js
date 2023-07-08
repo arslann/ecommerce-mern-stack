@@ -37,14 +37,6 @@ export const register = createAsyncThunk(
   }
 );
 
-export const logout = createAsyncThunk('auth/logout', async () => {
-  try {
-    await instance.post('/api/logout');
-  } catch (error) {
-    throw new Error(error.response.data.errors);
-  }
-});
-
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
@@ -53,7 +45,10 @@ const authSlice = createSlice({
     token: null,
   },
   reducers: {
-    clearError: (state) => {
+    logout: (state) => {
+      // localStorage.removeItem('userToken') // deletes token from storage
+      state.user = null;
+      state.token = null;
       state.error = null;
     },
   },
@@ -74,18 +69,10 @@ const authSlice = createSlice({
       })
       .addCase(register.rejected, (state, action) => {
         state.error = action.payload;
-      })
-      .addCase(logout.fulfilled, (state) => {
-        state.user = null;
-        state.token = null;
-        state.error = null; // Clear any previous errors
-      })
-      .addCase(logout.rejected, (state, action) => {
-        state.error = action.error.message;
       });
   },
 });
 
-export const { clearError } = authSlice.actions;
+export const { logout } = authSlice.actions;
 
 export default authSlice.reducer;
