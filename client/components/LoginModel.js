@@ -2,7 +2,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styles from './LoginModal.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, register, logout } from '@/redux/authSlice';
+import { login, register, logout, setCredentials } from '@/app/store/authSlice';
+import { useGetUserDetailsQuery } from '@/app/store/authService';
 
 const LoginModal = () => {
   const [email, setEmail] = useState('');
@@ -69,6 +70,7 @@ const LoginModal = () => {
     }, 500);
   };
 
+  // dispatch logout
   const handleSignOut = () => {
     dispatch(logout());
   };

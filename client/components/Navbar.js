@@ -3,6 +3,7 @@ import Link from 'next/link';
 import LoginModal from './LoginModel';
 import NavbarDrawer from './NavbarDrawer';
 
+
 function Navbar() {
   return (
     <nav className="navbar navbar-center w-full font-mono justify-around mt-3 text-[#686868] ">

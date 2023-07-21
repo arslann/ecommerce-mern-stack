@@ -9,7 +9,7 @@ const adminAuth = require('../../middleware/adminAuth');
 // @route GET api/auth
 // @desc Test route
 // @access public
-router.get('/', [auth, adminAuth], testAuth);
+router.get('/', [auth], testAuth);
 
 // @route POST api/auth
 // @desc Login user

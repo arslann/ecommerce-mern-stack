@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:5000', // Update this URL
+  baseURL: 'http://localhost:5000', // Backend URL
 });
 
 export const login = createAsyncThunk(
@@ -10,6 +10,10 @@ export const login = createAsyncThunk(
   async (credentials, { rejectWithValue }) => {
     try {
       const response = await instance.post('/api/auth', credentials);
+
+      // store user's token in local storage
+      localStorage.setItem('userToken', response.data.token);
+
       return response.data.token;
     } catch (error) {
       if (!error.response) {
@@ -26,6 +30,10 @@ export const register = createAsyncThunk(
   async (credentials, { rejectWithValue }) => {
     try {
       const response = await instance.post('/api/users', credentials);
+
+      // store user's token in local storage
+      localStorage.setItem('userToken', response.data.token);
+
       return response.data.token;
     } catch (error) {
       if (!error.response) {
@@ -37,19 +45,30 @@ export const register = createAsyncThunk(
   }
 );
 
+// initialize userToken from local storage
+
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
     user: null,
     error: null,
-    token: null,
+    userInfo: null,
+    token:
+      typeof window !== 'undefined'
+        ? window.localStorage.getItem('userToken')
+        : null,
   },
   reducers: {
     logout: (state) => {
-      // localStorage.removeItem('userToken') // deletes token from storage
+      localStorage.removeItem('userToken'); // deletes token from storage
       state.user = null;
       state.token = null;
       state.error = null;
+      state.userInfo = null;
+    },
+    setCredentials: (state, { payload }) => {
+      state.userInfo = payload;
+      state.user = true;
     },
   },
   extraReducers: (builder) => {
@@ -73,6 +92,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, setCredentials } = authSlice.actions;
 
 export default authSlice.reducer;
