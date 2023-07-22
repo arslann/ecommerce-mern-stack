@@ -1,0 +1,36 @@
+.Category_Menu:hover .sub_menu {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* .menu-mega {
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+} */
+
+.sub_menu {
+  position: absolute;
+  left: 0;
+  width: 100%;
+
+  padding-top: 28px;
+  padding-bottom: 24px;
+  background: #fff;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.04);
+  transition: all 0.5s ease-in-out;
+
+  visibility: hidden;
+  opacity: 0;
+
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+}
+
+.menu-item:not(:last-child) {
+  border-right: 1px solid rgb(214, 213, 213);
+  padding: 8px 16px;
+  padding-right: 36px;
+}

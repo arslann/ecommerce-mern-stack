@@ -2,13 +2,13 @@ import React from 'react';
 import Link from 'next/link';
 import LoginModal from './LoginModel';
 import NavbarDrawer from './NavbarDrawer';
-
+import Categories from './Categories';
 
 function Navbar() {
   return (
     <nav className="navbar navbar-center w-full font-mono justify-around mt-3 text-[#686868] ">
       <div className="">
-        <h6 className="font-bol cursor-pointer hover:text-black">Categories</h6>
+        <Categories />
         <div className="dropdown dropdown-hover ml-5">
           <h6 tabIndex={0} className="cursor-pointer hover:text-black">
             Pages
