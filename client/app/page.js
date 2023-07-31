@@ -4,6 +4,8 @@ import { useGetUserDetailsQuery } from './store/authService';
 import { useEffect } from 'react';
 import { setCredentials } from './store/authSlice';
 
+import Carousel from '@/components/Carousel';
+
 export default function Home() {
   const dispatch = useDispatch();
 
@@ -18,5 +20,5 @@ export default function Home() {
     if (data) dispatch(setCredentials(data));
   }, [data, dispatch]);
 
-  return <main className=""></main>;
+  return <Carousel />;
 }

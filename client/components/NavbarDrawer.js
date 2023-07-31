@@ -13,7 +13,7 @@ function NavbarDrawer() {
           Cart
         </label>
       </div>
-      <div className="drawer-side">
+      <div className="drawer-side z-20">
         <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
         <ul className="menu p-4 w-1/4 h-full bg-base-200 text-base-content">
           {/* Sidebar content here */}

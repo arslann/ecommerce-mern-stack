@@ -6,16 +6,16 @@ import Categories from './Categories';
 
 function Navbar() {
   return (
-    <nav className="navbar navbar-center w-full font-mono justify-around mt-3 text-[#686868] ">
-      <div className="">
+    <nav className="navbar navbar-center  w-full justify-around mt-3 text-[#686868]  z-50 ">
+      <div className="z-50">
         <Categories />
-        <div className="dropdown dropdown-hover ml-5">
+        <div className="dropdown dropdown-hover ml-5 ">
           <h6 tabIndex={0} className="cursor-pointer hover:text-black">
             Pages
           </h6>
           <ul
             tabIndex={0}
-            className="dropdown-content menu p-2 w-48 shadow float-left bg-black text-white -ml-5"
+            className="dropdown-content menu p-2 w-48 shadow float-left bg-black text-white -ml-5 "
           >
             <li>
               <a>About Us</a>

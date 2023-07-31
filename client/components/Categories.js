@@ -8,7 +8,7 @@ import { BiChair } from 'react-icons/bi';
 
 function Categories() {
   return (
-    <div className="Category_Menu">
+    <div className="Category_Menu ">
       <h6 className="font-bol cursor-pointer hover:text-black">Categories</h6>
 
       <div className="sub_menu">
