@@ -45,14 +45,21 @@ module.exports.createOrder = async (req, res) => {
       address: req.body.address,
     });
 
-    req.body.products.forEach((productId) => {
-      newOrder.products.unshift({ product: productId });
+    const productPromises = req.body.products.map(async ({product , quantity}) => {
+      const productExists = await Product.exists({ _id: product });
+      if (productExists) {
+        newOrder.products.unshift({ product: product, quantity });
+      } else {
+        throw new Error(`Product with ID ${product} not found`);
+      }
     });
+
+    await Promise.all(productPromises); // Wait for all product checks to complete
 
     res.json(newOrder);
   } catch (error) {
     console.log(error.message);
-    res.status(500).send('Server Error');
+    res.status(400).json({ error: error.message });
   }
 };
 

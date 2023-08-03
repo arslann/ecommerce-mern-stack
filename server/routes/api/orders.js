@@ -27,7 +27,7 @@ router.post(
   auth,
   [
     check('products', 'products can not be empty').notEmpty(),
-    check('address', 'please include address').notEmpty(),
+    check('address', 'please include an address').notEmpty(),
   ],
   createOrder
 );

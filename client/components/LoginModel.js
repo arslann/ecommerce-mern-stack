@@ -56,7 +56,7 @@ const LoginModal = () => {
     }
   };
 
-  // toggle form between registration or login
+  // toggle form between registration and login
   const handleRegisterClick = () => {
     setIsRegisterFormActive(!isRegisterFormActive);
   };

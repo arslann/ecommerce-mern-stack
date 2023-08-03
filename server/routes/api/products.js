@@ -32,6 +32,7 @@ router.post(
   [
     check('title', 'Please include a title').notEmpty(),
     check('description', 'Please include description').notEmpty(),
+    check('category', 'Please include a category').notEmpty(),
     check('price', 'Please include a price').isNumeric(),
   ],
   addProduct
