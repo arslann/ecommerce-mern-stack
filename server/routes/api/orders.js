@@ -14,11 +14,6 @@ const router = express.Router();
 // @access private
 router.get('/', auth, getOrders);
 
-// @route GET api/orders/user
-// @desc Get order for specified user
-// @access private
-router.get('/user', auth, getOrdersForUser);
-
 // @route POST api/orders
 // @desc Create an order
 // @access private

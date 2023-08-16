@@ -2,17 +2,8 @@ const Order = require('../models/Order');
 const { validationResult } = require('express-validator');
 const Product = require('../models/Product');
 
-module.exports.getOrders = async (req, res) => {
-  try {
-    const Orders = await Order.find().sort({ date: -1 });
-    res.json(Orders);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).send('Server Error');
-  }
-};
 
-module.exports.getOrdersForUser = async (req, res) => {
+module.exports.getOrders = async (req, res) => {
   try {
     const order = await Order.find({ user: req.user.id }).populate('product', [
       'title',
@@ -56,7 +47,9 @@ module.exports.createOrder = async (req, res) => {
 
     await Promise.all(productPromises); // Wait for all product checks to complete
 
-    res.json(newOrder);
+    const order = await newOrder.save();
+
+    res.json(order);
   } catch (error) {
     console.log(error.message);
     res.status(400).json({ error: error.message });

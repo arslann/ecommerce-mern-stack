@@ -9,7 +9,7 @@ import Link from 'next/link';
 
 function Carousel() {
   return (
-    <div className="carousel w-full max-h-[680px]  font-mono -z-10 no-scrollbar ">
+    <div className="carousel w-full max-h-[680px] font-mono -z-10 no-scrollbar ">
       <div id="slide1" className="carousel-item relative w-full ">
         <Link
           href="/category/decoration"
