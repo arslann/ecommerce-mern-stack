@@ -19,6 +19,7 @@ function Carousel() {
         </Link>
         <Image
           src={interior}
+          alt="slider"
           className="object-cover w-full h-[100%] object-center brightness-50 "
         />
         <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
@@ -39,6 +40,7 @@ function Carousel() {
         </Link>
         <Image
           src={backpack}
+          alt="slider"
           className="object-cover w-full h-[100%] object-center brightness-50"
         />
         <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
@@ -59,6 +61,7 @@ function Carousel() {
         </Link>
         <Image
           src={pot}
+          alt="slider"
           className="object-cover w-full h-[100%] object-center brightness-50"
         />
         <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
