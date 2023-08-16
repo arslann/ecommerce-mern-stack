@@ -29,9 +29,19 @@ export const authApi = createApi({
         method: 'GET',
       }),
     }),
+    getProduct: builder.query({
+      query: (id) => ({
+        url: `api/products/${id}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
 // export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetUserDetailsQuery, useGetProductsQuery } = authApi;
+export const {
+  useGetUserDetailsQuery,
+  useGetProductsQuery,
+  useGetProductQuery,
+} = authApi;
