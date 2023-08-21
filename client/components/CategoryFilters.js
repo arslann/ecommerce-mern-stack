@@ -20,7 +20,7 @@ function CategoryFilters({ data }) {
             <li>
               <button
                 className={
-                  'hover:text-yellow-600 ' +
+                  'hover:text-yellow-600 transition-color duration-200 ease-in ' +
                   (category === 'All' ? 'text-yellow-600' : '')
                 }
                 onClick={handleCategoryChange}
@@ -32,7 +32,7 @@ function CategoryFilters({ data }) {
             <li className="inline-block">
               <button
                 className={
-                  'hover:text-yellow-600 ' +
+                  'hover:text-yellow-600 transition-color duration-200 ease-in ' +
                   (category === 'Bags & Backpacks' ? 'text-yellow-600' : '')
                 }
                 onClick={handleCategoryChange}
@@ -44,7 +44,7 @@ function CategoryFilters({ data }) {
             <li>
               <button
                 className={
-                  'hover:text-yellow-600 ' +
+                  'hover:text-yellow-600 transition-color duration-200 ease-in ' +
                   (category === 'Decoration' ? 'text-yellow-600' : '')
                 }
                 onClick={handleCategoryChange}
@@ -56,7 +56,7 @@ function CategoryFilters({ data }) {
             <li>
               <button
                 className={
-                  'hover:text-yellow-600 ' +
+                  'hover:text-yellow-600 transition-color duration-200 ease-in ' +
                   (category === 'Essentials' ? 'text-yellow-600' : '')
                 }
                 onClick={handleCategoryChange}
@@ -68,7 +68,7 @@ function CategoryFilters({ data }) {
             <li>
               <button
                 className={
-                  'hover:text-yellow-600 ' +
+                  'hover:text-yellow-600 transition-color duration-200 ease-in ' +
                   (category === 'Interior' ? 'text-yellow-600' : '')
                 }
                 onClick={handleCategoryChange}
@@ -84,7 +84,7 @@ function CategoryFilters({ data }) {
             <li>
               <button
                 className={
-                  'hover:text-yellow-600 ' +
+                  'hover:text-yellow-600 transition-color duration-200 ease-in ' +
                   (isFilterActive ? 'text-yellow-600' : '')
                 }
                 onClick={() => setIsFilterActive(!isFilterActive)}
@@ -96,7 +96,7 @@ function CategoryFilters({ data }) {
             <li>
               <button
                 className={
-                  'hover:text-yellow-600 ' +
+                  'hover:text-yellow-600 transition-color duration-200 ease-in ' +
                   (isSearchBarActive ? 'text-yellow-600' : '')
                 }
                 onClick={() => setIsSearchBarActive(!isSearchBarActive)}

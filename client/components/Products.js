@@ -15,11 +15,9 @@ function Products({ products }) {
         <CategoryFilters data={data} />
         <div className="mt-8 flex w-full flex-wrap gap-4 justify-start items-center md:justify-center lg:justify-start">
           <ProductCard {...data[0]} />
-          <ProductCard {...data[0]} />
-          <ProductCard {...data[0]} />
-          <ProductCard {...data[0]} />
-          <ProductCard {...data[0]} />
-          <ProductCard {...data[0]} />
+          {data.map((el) => (
+            <ProductCard {...el} />
+          ))}
         </div>
       </div>
     )
