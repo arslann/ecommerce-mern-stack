@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useEffect } from 'react';
 import Link from 'next/link';
 import LoginModal from './LoginModel';
@@ -9,7 +9,6 @@ import { useGetUserDetailsQuery } from '@/app/store/authService';
 import { setCredentials } from '@/app/store/authSlice';
 
 function Navbar() {
-
   const dispatch = useDispatch();
 
   const { data, isFetching } = useGetUserDetailsQuery('userDetails', {
@@ -20,7 +19,7 @@ function Navbar() {
   // console.log(data); // user object
 
   useEffect(() => {
-    console.log(data);
+    // console.log(data);
     if (data) dispatch(setCredentials(data));
   }, [data, dispatch]);
 

@@ -1,7 +1,7 @@
 'use client';
 import { useGetProductQuery } from '@/app/store/authService';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import { useSelector, useDispatch } from 'react-redux';
 import { addToCart } from '@/app/store/cartSlice';
@@ -29,8 +29,13 @@ export default function page({ params }) {
   if (isLoading) return <h1>Loading....</h1>;
 
   const handleAddToCart = () => {
-    const newItem = { ...data };
-    console.log(addToCart);
+    const newItem = {
+      id: data._id,
+      image: data.image[0],
+      title: data.title,
+      price: data.price,
+      quantity,
+    };
     dispatch(addToCart(newItem));
   };
 
