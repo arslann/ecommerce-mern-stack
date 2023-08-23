@@ -3,6 +3,9 @@ import { useGetProductQuery } from '@/app/store/authService';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import React, { useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
+import { useSelector, useDispatch } from 'react-redux';
+import { addToCart } from '@/app/store/cartSlice';
+
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 
 import {
@@ -16,12 +19,20 @@ export default function page({ params }) {
   const [isHovered, setisHovered] = useState(false);
   const [quantity, setQuantity] = useState(1);
 
+  const dispatch = useDispatch();
+
   // fetch single product by id
   const { data, error, isLoading, isSuccess } = useGetProductQuery(params.slug);
 
-  if (isSuccess) console.log(data);
+  // if (isSuccess) console.log(data);
 
   if (isLoading) return <h1>Loading....</h1>;
+
+  const handleAddToCart = () => {
+    const newItem = { ...data };
+    console.log(addToCart);
+    dispatch(addToCart(newItem));
+  };
 
   const handleIncrement = () => {
     setQuantity(quantity + 1);
@@ -103,7 +114,10 @@ export default function page({ params }) {
                   <BiSolidRightArrow onClick={handleIncrement} />
                 </div>
               </div>
-              <button className="btn rounded-none bg-black text-white w-full hover:bg-gray-800">
+              <button
+                onClick={handleAddToCart}
+                className="btn rounded-none bg-black text-white w-full hover:bg-gray-800"
+              >
                 Add to cart
               </button>
             </div>
