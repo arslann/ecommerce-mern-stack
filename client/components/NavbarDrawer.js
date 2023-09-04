@@ -2,13 +2,20 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { BiSolidRightArrow, BiSolidLeftArrow } from 'react-icons/bi';
 import { ImCross } from 'react-icons/im';
+import {
+  removeFromCart,
+  incrementQuantity,
+  decrementQuantity,
+} from '@/app/store/cartSlice';
 
 function NavbarDrawer() {
   const cart = useSelector((state) => state.cart);
+
+  const dispatch = useDispatch();
 
   const [quantity, setQuantity] = useState(1);
 
@@ -16,14 +23,16 @@ function NavbarDrawer() {
     console.log(cart);
   }, [cart]);
 
-  const handleIncrement = () => {
-    setQuantity(quantity + 1);
+  const handleRemove = (id) => {
+    dispatch(removeFromCart(id));
   };
 
-  const handleDecrement = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
+  const handleIncrement = (id) => {
+    dispatch(incrementQuantity(id));
+  };
+
+  const handleDecrement = (id) => {
+    dispatch(decrementQuantity(id));
   };
 
   return (
@@ -40,14 +49,14 @@ function NavbarDrawer() {
       </div>
       <div className="drawer-side z-20 ">
         <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
-        <div className="menu px-11 w-1/4 h-full bg-[#333] text-white pt-10">
+        <div className="menu w-2/3 md:w-1/2 lg:w-1/3  h-full bg-[#333] text-white pt-10">
           {cart.length < 1 ? (
             <h3>No products in the cart</h3>
           ) : (
             <ul>
               {cart.map((product) => {
                 return (
-                  <li className="w-full h-[110px] flex flex-row flex-nowrap justify-start gap-1 border-t border-gray-600 pt-3 mb-4">
+                  <li className="max-w-[90%] h-[110px] flex flex-row flex-nowrap justify-start gap-1 border-t border-gray-600 pt-3 mb-4 m-auto">
                     <div className="w-20 h-full relative">
                       <Link href={`/product/` + product.id}>
                         <Image src={product.image} fill={true} />
@@ -59,14 +68,14 @@ function NavbarDrawer() {
                         <label>Qty</label>
                         <div className="flex flex-row items-center gap-2">
                           <BiSolidLeftArrow
-                            onClick={handleDecrement}
+                            onClick={() => handleDecrement(product.id)}
                             size={12}
                           />
                           <span className="quantity-text">
                             {product.quantity}
                           </span>
                           <BiSolidRightArrow
-                            onClick={handleIncrement}
+                            onClick={() => handleIncrement(product.id)}
                             size={12}
                           />
                         </div>
@@ -74,7 +83,10 @@ function NavbarDrawer() {
                       <div className="absolute right-0 bottom-0">
                         ${product.price}
                       </div>
-                      <ImCross className="absolute right-0 top-0" />
+                      <ImCross
+                        className="absolute right-0 top-0"
+                        onClick={() => handleRemove(product.id)}
+                      />
                     </div>
                   </li>
                 );
