@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 
-function CategoryFilters({ data }) {
+function CategoryFilters({ filterProducts }) {
   const [category, setCategory] = useState('All');
   const [isFilterActive, setIsFilterActive] = useState(false);
   const [isSearchBarActive, setIsSearchBarActive] = useState(false);
@@ -9,7 +9,11 @@ function CategoryFilters({ data }) {
   const handleCategoryChange = (e) => {
     e.preventDefault();
 
-    setCategory(e.target.innerText);
+    const newCategory = e.target.innerText;
+    setCategory(newCategory);
+
+    // Call the callback function to filter products and send the selected category
+    filterProducts(newCategory);
   };
 
   return (
@@ -37,7 +41,7 @@ function CategoryFilters({ data }) {
                 }
                 onClick={handleCategoryChange}
               >
-                Bags & Backpacks
+                Backpack
               </button>
               <span className="pl-3 text-gray-400">|</span>
             </li>
@@ -81,18 +85,6 @@ function CategoryFilters({ data }) {
 
         <div>
           <ul className="flex gap-3 font-normal text-md text-gray-500">
-            <li>
-              <button
-                className={
-                  'hover:text-yellow-600 transition-color duration-200 ease-in ' +
-                  (isFilterActive ? 'text-yellow-600' : '')
-                }
-                onClick={() => setIsFilterActive(!isFilterActive)}
-              >
-                Filter
-              </button>
-              <span className="pl-3 text-gray-400">|</span>
-            </li>
             <li>
               <button
                 className={

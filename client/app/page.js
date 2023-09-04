@@ -1,11 +1,15 @@
+'use client';
 import Carousel from '@/components/Carousel';
 import Products from '@/components/Products';
-
+import { useGetProductsQuery } from '@/app/store/authService';
 export default function Home() {
+  const { data, error, isLoading, isSuccess } = useGetProductsQuery();
+  if (isSuccess) console.log(data);
+
   return (
     <div className="container mx-auto font-mono px-4">
       <Carousel />
-      <Products />
+      {isSuccess && <Products products={data} />}
     </div>
   );
 }
