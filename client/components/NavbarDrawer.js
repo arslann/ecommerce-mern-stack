@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { BiSolidRightArrow, BiSolidLeftArrow } from 'react-icons/bi';
@@ -10,6 +10,7 @@ import {
   removeFromCart,
   incrementQuantity,
   decrementQuantity,
+  initializeCartFromLocalStorage,
 } from '@/app/store/cartSlice';
 
 function NavbarDrawer() {
@@ -17,11 +18,14 @@ function NavbarDrawer() {
 
   const dispatch = useDispatch();
 
-  const [quantity, setQuantity] = useState(1);
+  // Initialize the cart state from local storage when the component mounts
+  // useEffect(() => {
+  //   console.log(cart);
+  // }, [cart]);
 
   useEffect(() => {
-    console.log(cart);
-  }, [cart]);
+    dispatch(initializeCartFromLocalStorage());
+  }, []);
 
   const handleRemove = (id) => {
     dispatch(removeFromCart(id));
