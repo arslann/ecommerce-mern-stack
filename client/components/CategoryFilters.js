@@ -1,10 +1,13 @@
 'use client';
 import React, { useState } from 'react';
 
-function CategoryFilters({ filterProducts }) {
-  const [category, setCategory] = useState('All');
-  const [isFilterActive, setIsFilterActive] = useState(false);
+function CategoryFilters({
+  searchText,
+  filterProductsByCategory,
+  filterProductsBySearchText,
+}) {
   const [isSearchBarActive, setIsSearchBarActive] = useState(false);
+  const [category, setCategory] = useState('All');
 
   const handleCategoryChange = (e) => {
     e.preventDefault();
@@ -12,8 +15,16 @@ function CategoryFilters({ filterProducts }) {
     const newCategory = e.target.innerText;
     setCategory(newCategory);
 
-    // Call the callback function to filter products and send the selected category
-    filterProducts(newCategory);
+    // Call the callback function to filter products by category
+    filterProductsByCategory(newCategory);
+  };
+
+  const handleSearchTextChange = (e) => {
+    const newText = e.target.value;
+    console.log(newText);
+
+    // Call the callback function to filter products by search text
+    filterProductsBySearchText(newText);
   };
 
   return (
@@ -99,20 +110,18 @@ function CategoryFilters({ filterProducts }) {
           </ul>
         </div>
       </div>
-
-      <div className="flex justify-between mt-6">
-        <div>
-          <h3 className="font-normal text-md text-gray-400">Sort By</h3>
-        </div>
-        <div>
-          <h3>Price</h3>
-        </div>
-        <div>
-          <h3>Color</h3>
-        </div>
-        <div>
-          <h3>Tags</h3>
-        </div>
+      <div
+        className={`${
+          isSearchBarActive ? 'opacity-100' : 'opacity-0'
+        } transition-opacity duration-300 ease-in-out mt-6`}
+      >
+        <input
+          type="text"
+          placeholder="Search products..."
+          value={searchText}
+          onChange={handleSearchTextChange}
+          className="bg-gray-100 rounded-md w-full p-4 outline-none text-xl"
+        />
       </div>
     </div>
   );
