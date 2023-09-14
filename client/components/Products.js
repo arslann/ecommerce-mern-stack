@@ -34,7 +34,7 @@ function Products({ products }) {
   };
 
   return (
-    <div className="mt-8 max-w-6xl mx-auto">
+    <div className="mt-8 max-w-6xl mx-auto ">
       <CategoryFilters
         searchText={searchText}
         filterProductsByCategory={filterProductsByCategory}

@@ -50,7 +50,7 @@ export default function page({ params }) {
   };
 
   return (
-    <div className="bg-[#eee]">
+    <div className="bg-[#eee] ">
       <div className="container mx-auto w-full pt-6 pb-12">
         <Breadcrumbs category={data.category} productName={data.title} />
         <div className="flex flex-nowrap w-full justify-center gap-6">

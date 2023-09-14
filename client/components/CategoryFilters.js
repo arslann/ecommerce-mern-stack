@@ -112,8 +112,8 @@ function CategoryFilters({
       </div>
       <div
         className={`${
-          isSearchBarActive ? 'opacity-100' : 'opacity-0'
-        } transition-opacity duration-300 ease-in-out mt-6`}
+          isSearchBarActive ? 'opacity-100 block' : 'opacity-0 hidden'
+        } transition-all duration-300 ease-in mt-6 `}
       >
         <input
           type="text"
