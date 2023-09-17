@@ -4,24 +4,33 @@ const OrderSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: true,
   },
   products: [
     {
       product: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'product',
-        required: true
+        required: true,
       },
       quantity: {
         type: Number,
-        default: 1
-      }
+        default: 1,
+      },
     },
   ],
+  name: {
+    type: String,
+  },
+  lastname: {
+    type: String,
+  },
   address: {
     type: String,
     required: true,
+  },
+  phone: {
+    type: String,
   },
   status: {
     type: String,

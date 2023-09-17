@@ -2,7 +2,6 @@ const Order = require('../models/Order');
 const { validationResult } = require('express-validator');
 const Product = require('../models/Product');
 
-
 module.exports.getOrders = async (req, res) => {
   try {
     const order = await Order.find({ user: req.user.id }).populate('product', [
@@ -36,19 +35,21 @@ module.exports.createOrder = async (req, res) => {
       address: req.body.address,
     });
 
-    const productPromises = req.body.products.map(async ({product , quantity}) => {
-      const productExists = await Product.exists({ _id: product });
-      if (productExists) {
-        newOrder.products.unshift({ product: product, quantity });
-      } else {
-        throw new Error(`Product with ID ${product} not found`);
+    const productPromises = req.body.products.map(
+      async ({ product, quantity }) => {
+        const productExists = await Product.exists({ _id: product });
+        if (productExists) {
+          newOrder.products.unshift({ product: product, quantity });
+        } else {
+          throw new Error(`Product with ID ${product} not found`);
+        }
       }
-    });
+    );
 
     await Promise.all(productPromises); // Wait for all product checks to complete
 
     const order = await newOrder.save();
-
+    console.log(order);
     res.json(order);
   } catch (error) {
     console.log(error.message);

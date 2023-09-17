@@ -26,7 +26,7 @@ function Products({ products }) {
     const filtered = products.filter((product) => {
       return (
         product.title.toLowerCase().includes(text.toLowerCase()) &&
-        product.category === category
+        (category === 'All' ? true : product.category === category)
       );
     });
 

@@ -35,6 +35,13 @@ export const authApi = createApi({
         method: 'GET',
       }),
     }),
+    createOrder: builder.mutation({
+      query: (orderData) => ({
+        url: 'api/orders',
+        method: 'POST',
+        body: orderData,
+      }),
+    }),
   }),
 });
 
@@ -44,4 +51,5 @@ export const {
   useGetUserDetailsQuery,
   useGetProductsQuery,
   useGetProductQuery,
+  useCreateOrderMutation,
 } = authApi;

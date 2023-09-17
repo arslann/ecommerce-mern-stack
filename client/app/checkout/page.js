@@ -1,11 +1,15 @@
 'use client';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Image from 'next/image';
+import { useCreateOrderMutation } from '../store/authService';
 
 function page() {
   const cart = useSelector((state) => state.cart);
+  const [subTotal, setSubTotal] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [shippingPrice, setSippingPrice] = useState(10);
 
   // Initialize state for form fields
   const [formData, setFormData] = useState({
@@ -18,6 +22,8 @@ function page() {
     phone: '',
   });
 
+  const [createOrder] = useCreateOrderMutation();
+
   // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -28,10 +34,37 @@ function page() {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // You can perform actions with the form data here, like sending it to a server or processing it.
-    console.log('Form Data:', formData);
+
+    // Prepare the order data
+    const orderData = {
+      userId: 'user_id_here', // Replace with the actual user ID
+      products: cart.map((product) => ({
+        product: product.id, // Assuming 'id' is the product ID
+        quantity: product.quantity,
+      })),
+      name: formData.firstName,
+      lastname: formData.lastName,
+      address:
+        formData.streetAddress +
+        ' ' +
+        formData.townCity +
+        ' ' +
+        formData.countryRegion,
+      phone: formData.phone,
+      // You can set 'status' and 'date' in your server logic
+    };
+
+    try {
+      const { data } = await createOrder(orderData);
+      console.log('Response before unwrap:', data);
+
+      // Optionally, you can redirect the user to a confirmation page or perform other actions
+    } catch (error) {
+      // Handle any errors that occur during order creation
+      console.error('Error creating order:', error);
+    }
   };
 
   if (cart.length < 1) {
@@ -41,6 +74,15 @@ function page() {
       </div>
     );
   }
+
+  useEffect(() => {
+    let total = 0;
+    cart.forEach((product) => {
+      total += product.price * product.quantity;
+    });
+    setSubTotal(total);
+    setTotal(total + shippingPrice);
+  }, []);
 
   return (
     <div className="container mx-auto font-mono px-4 mt-8 flex flex-row gap-6">
@@ -81,6 +123,7 @@ function page() {
               name="countryRegion"
               value={formData.countryRegion}
               onChange={handleInputChange}
+              required
               className="border border-gray-300 px-2 py-1"
             />
           </div>
@@ -90,6 +133,7 @@ function page() {
               type="text"
               id="streetAddress"
               name="streetAddress"
+              required
               value={formData.streetAddress}
               onChange={handleInputChange}
               className="border border-gray-300 px-2 py-1"
@@ -101,6 +145,7 @@ function page() {
               type="text"
               id="townCity"
               name="townCity"
+              required
               value={formData.townCity}
               onChange={handleInputChange}
               className="border border-gray-300 px-2 py-1"
@@ -112,6 +157,7 @@ function page() {
               type="text"
               id="zipCode"
               name="zipCode"
+              required
               value={formData.zipCode}
               onChange={handleInputChange}
               className="border border-gray-300 px-2 py-1"
@@ -123,12 +169,18 @@ function page() {
               type="text"
               id="phone"
               name="phone"
+              required
               value={formData.phone}
               onChange={handleInputChange}
               className="border border-gray-300 px-2 py-1"
             />
           </div>
-          <button type="submit">Submit</button>
+          <button
+            type="submit"
+            className="bg-black text-white text-lg btn hover:bg-gray-800 "
+          >
+            Place Order
+          </button>
         </form>
       </div>
       <div className="flex-[1]">
@@ -154,6 +206,31 @@ function page() {
             );
           })}
         </ul>
+        <table className="bg-gray-100 w-1/2 border border-gray-600">
+          <tr className="border-b border-gray-500 p-4">
+            <td className="p-4">Subtotal</td>
+            <td className="px-4">${subTotal}</td>
+          </tr>
+          <tr className="flex flex-col">
+            <td className="p-4">Shipping</td>
+            <td className="px-4 pb-4">
+              <input
+                type="radio"
+                name="shipping_option"
+                id="standard_shipping"
+                value="10.00"
+                checked
+              />
+              <label className="ml-2" for="standard_shipping ">
+                Standard: $10.00
+              </label>
+            </td>
+          </tr>
+          <tr className="border-gray-500 border-t">
+            <td className="p-4">Total</td>
+            <td className="px-4">${total}</td>
+          </tr>
+        </table>
       </div>
     </div>
   );
