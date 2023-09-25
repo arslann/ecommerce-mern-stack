@@ -48,7 +48,7 @@ function CategoryFilters({
               <button
                 className={
                   'hover:text-yellow-600 transition-color duration-200 ease-in ' +
-                  (category === 'Bags & Backpacks' ? 'text-yellow-600' : '')
+                  (category === 'Backpack' ? 'text-yellow-600' : '')
                 }
                 onClick={handleCategoryChange}
               >

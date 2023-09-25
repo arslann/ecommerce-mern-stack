@@ -1,17 +1,17 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const getCartFromLocalStorage = () => {
-  const cartJSON = localStorage.getItem('cart');
+  const cartJSON = localStorage.getItem("cart");
   return cartJSON ? JSON.parse(cartJSON) : [];
 };
 
 const saveCartToLocalStorage = (cart) => {
-  localStorage.setItem('cart', JSON.stringify(cart));
+  localStorage.setItem("cart", JSON.stringify(cart));
 };
 
 const cartSlice = createSlice({
-  name: 'cart',
-  initialState: getCartFromLocalStorage(), // Initialize from local storage
+  name: "cart",
+  initialState: [], // Initialize from local storage
   reducers: {
     addToCart: (state, action) => {
       const newItem = action.payload;

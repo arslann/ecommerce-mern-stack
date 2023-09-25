@@ -3,7 +3,7 @@ import React from 'react';
 
 function Breadcrumbs({ category, productName }) {
   return (
-    <div className="text-sm breadcrumbs">
+    <div className="text-sm breadcrumbs max-sm:hidden">
       <ul>
         <li>
           <Link href="/">Home</Link>

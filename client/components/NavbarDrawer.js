@@ -1,17 +1,17 @@
-'use client';
-import Image from 'next/image';
-import Link from 'next/link';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+"use client";
+import Image from "next/image";
+import Link from "next/link";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import { BiSolidRightArrow, BiSolidLeftArrow } from 'react-icons/bi';
-import { ImCross } from 'react-icons/im';
+import { BiSolidRightArrow, BiSolidLeftArrow } from "react-icons/bi";
+import { ImCross } from "react-icons/im";
 import {
   removeFromCart,
   incrementQuantity,
   decrementQuantity,
   initializeCartFromLocalStorage,
-} from '@/app/store/cartSlice';
+} from "@/app/store/cartSlice";
 
 function NavbarDrawer() {
   const cart = useSelector((state) => state.cart);

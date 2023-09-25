@@ -51,11 +51,11 @@ export default function page({ params }) {
 
   return (
     <div className="bg-[#eee] ">
-      <div className="container mx-auto w-full pt-6 pb-12">
+      <div className="container mx-auto w-full sm:pt-6">
         <Breadcrumbs category={data.category} productName={data.title} />
-        <div className="flex flex-nowrap w-full justify-center gap-6">
+        <div className="flex flex-col sm:flex-row flex-nowrap w-full justify-center items-center gap-6">
           <div
-            className="h-auto w-2/5"
+            className="h-auto w-full sm:w-2/5"
             onMouseOver={(e) => setisHovered(true)}
             onMouseOut={(e) => setisHovered(false)}
           >
@@ -100,7 +100,7 @@ export default function page({ params }) {
               </div>
             </Carousel>
           </div>
-          <div className="flex justify-evenly flex-col w-1/3 max-w-sm ">
+          <div className="flex justify-evenly flex-col w-full sm:w-1/3 sm:max-w-sm max-sm:px-4 ">
             <div>
               <h1 className="text-2xl font-bold">{data.title}</h1>
               <p className="text-xl text-yellow-500 font-semibold mt-4">
