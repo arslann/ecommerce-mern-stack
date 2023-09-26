@@ -1,14 +1,16 @@
-'use client';
-import React, { useContext, useEffect, useState } from 'react';
-import styles from './LoginModal.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { login, register, logout, setCredentials } from '@/app/store/authSlice';
-import { useGetUserDetailsQuery } from '@/app/store/authService';
+"use client";
+import React, { useContext, useEffect, useState } from "react";
+import styles from "./LoginModal.css";
+import { useDispatch, useSelector } from "react-redux";
+import { login, register, logout, setCredentials } from "@/app/store/authSlice";
+import { useGetUserDetailsQuery } from "@/app/store/authService";
+
+import { BiLogIn, BiLogOut } from "react-icons/bi";
 
 const LoginModal = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const [isRegisterFormActive, setIsRegisterFormActive] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(false); // New state for fade-in animation
 
@@ -20,13 +22,13 @@ const LoginModal = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     switch (name) {
-      case 'email':
+      case "email":
         setEmail(value);
         break;
-      case 'name':
+      case "name":
         setName(value);
         break;
-      case 'password':
+      case "password":
         setPassword(value);
         break;
     }
@@ -52,7 +54,7 @@ const LoginModal = () => {
         dispatch(login({ email, password }));
       }
     } catch (error) {
-      console.error('Login failed:', error);
+      console.error("Login failed:", error);
     }
   };
 
@@ -79,17 +81,19 @@ const LoginModal = () => {
     <div>
       {user === null ? (
         <button
-          className="w-max bg-white border-none text-[#686868] hover:text-black"
+          className="w-max bg-white border-none text-[#686868] hover:text-black "
           onClick={() => window.my_modal_3.showModal()}
         >
-          Sign In
+          <BiLogIn size={30} className="sm:hidden mt-2" />
+          <span className="hidden sm:block">Sign In</span>
         </button>
       ) : (
         <button
           className="w-max bg-white border-none text-[#686868] hover:text-black"
           onClick={() => handleSignOut()}
         >
-          Sign Out
+          <BiLogOut size={30} className="sm:hidden mt-2" />
+          <span className="hidden sm:block">Sign Out</span>
         </button>
       )}
 
@@ -105,12 +109,12 @@ const LoginModal = () => {
           {/* Inner container to use fade-in animation */}
           <div
             className={`flex flex-col gap-3 ${
-              isFormVisible ? 'animate-fade-in' : '' // Apply fade-in animation class conditionally
+              isFormVisible ? "animate-fade-in" : "" // Apply fade-in animation class conditionally
             }`}
             // onAnimationEnd={handleAnimation}
           >
             <h2 className="mt-4 font-bold self-center text-2xl mb-4">
-              {isRegisterFormActive ? 'Register' : 'Sign In'}
+              {isRegisterFormActive ? "Register" : "Sign In"}
             </h2>
 
             {/* logged in message */}
@@ -167,7 +171,7 @@ const LoginModal = () => {
               onClick={handleSubmit}
               className="btn btn-block bg-black text-white hover:bg-[#282828] mt-4"
             >
-              {isRegisterFormActive ? 'Register' : 'Sign In'}
+              {isRegisterFormActive ? "Register" : "Sign In"}
             </button>
             <div className="divider">OR</div>
             <button
@@ -178,7 +182,7 @@ const LoginModal = () => {
                 handleAnimation();
               }} // Trigger fade-in animation on button click
             >
-              {isRegisterFormActive ? 'Sign In' : 'Create an Account'}
+              {isRegisterFormActive ? "Sign In" : "Create an Account"}
             </button>
           </div>
         </form>

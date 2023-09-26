@@ -1,18 +1,31 @@
-'use client';
-import React, { useState } from 'react';
-
+"use client";
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 function CategoryFilters({
   searchText,
   filterProductsByCategory,
   filterProductsBySearchText,
 }) {
   const [isSearchBarActive, setIsSearchBarActive] = useState(false);
-  const [category, setCategory] = useState('All');
+
+  const [category, setCategory] = useState("all");
+
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get("category") || "all";
+
+  useEffect(() => {
+    if (searchQuery && searchQuery.length > 1 && searchQuery !== "all") {
+      setCategory(searchQuery.toLowerCase());
+    } else {
+      setCategory("all");
+    }
+    filterProductsByCategory(searchQuery.toLowerCase());
+  }, [searchQuery]);
 
   const handleCategoryChange = (e) => {
     e.preventDefault();
 
-    const newCategory = e.target.innerText;
+    const newCategory = e.target.innerText.toLowerCase();
     setCategory(newCategory);
 
     // Call the callback function to filter products by category
@@ -29,14 +42,14 @@ function CategoryFilters({
 
   return (
     <div className="">
-      <div className=" flex flex-row justify-between">
+      <div className=" flex flex-row  justify-between">
         <div>
-          <ul className="flex gap-2 font-normal text-md text-gray-500">
-            <li>
+          <ul className="hidden sm:flex gap-2 font-normal text-md text-gray-500">
+            <li key={"all"}>
               <button
                 className={
-                  'hover:text-yellow-600 transition-color duration-200 ease-in ' +
-                  (category === 'All' ? 'text-yellow-600' : '')
+                  "hover:text-yellow-600 transition-color duration-200 ease-in " +
+                  (category === "all" ? "text-yellow-600" : "")
                 }
                 onClick={handleCategoryChange}
               >
@@ -44,11 +57,11 @@ function CategoryFilters({
               </button>
               <span className="pl-3 text-gray-400">|</span>
             </li>
-            <li className="inline-block">
+            <li key={"backpack"} className="inline-block">
               <button
                 className={
-                  'hover:text-yellow-600 transition-color duration-200 ease-in ' +
-                  (category === 'Backpack' ? 'text-yellow-600' : '')
+                  "hover:text-yellow-600 transition-color duration-200 ease-in " +
+                  (category === "backpack" ? "text-yellow-600" : "")
                 }
                 onClick={handleCategoryChange}
               >
@@ -56,11 +69,11 @@ function CategoryFilters({
               </button>
               <span className="pl-3 text-gray-400">|</span>
             </li>
-            <li>
+            <li key={"decoration"}>
               <button
                 className={
-                  'hover:text-yellow-600 transition-color duration-200 ease-in ' +
-                  (category === 'Decoration' ? 'text-yellow-600' : '')
+                  "hover:text-yellow-600 transition-color duration-200 ease-in " +
+                  (category === "decoration" ? "text-yellow-600" : "")
                 }
                 onClick={handleCategoryChange}
               >
@@ -68,11 +81,11 @@ function CategoryFilters({
               </button>
               <span className="pl-3 text-gray-400">|</span>
             </li>
-            <li>
+            <li key={"essentials"}>
               <button
                 className={
-                  'hover:text-yellow-600 transition-color duration-200 ease-in ' +
-                  (category === 'Essentials' ? 'text-yellow-600' : '')
+                  "hover:text-yellow-600 transition-color duration-200 ease-in " +
+                  (category === "essentials" ? "text-yellow-600" : "")
                 }
                 onClick={handleCategoryChange}
               >
@@ -80,11 +93,11 @@ function CategoryFilters({
               </button>
               <span className="pl-3 text-gray-400">|</span>
             </li>
-            <li>
+            <li key={"Interior"}>
               <button
                 className={
-                  'hover:text-yellow-600 transition-color duration-200 ease-in ' +
-                  (category === 'Interior' ? 'text-yellow-600' : '')
+                  "hover:text-yellow-600 transition-color duration-200 ease-in " +
+                  (category === "interior" ? "text-yellow-600" : "")
                 }
                 onClick={handleCategoryChange}
               >
@@ -94,13 +107,13 @@ function CategoryFilters({
           </ul>
         </div>
 
-        <div>
-          <ul className="flex gap-3 font-normal text-md text-gray-500">
-            <li>
+        <div className="max-sm:w-full">
+          <ul className="block max-sm:w-full sm:flex gap-3 font-normal text-md text-gray-500">
+            <li key={"search"}>
               <button
                 className={
-                  'hover:text-yellow-600 transition-color duration-200 ease-in ' +
-                  (isSearchBarActive ? 'text-yellow-600' : '')
+                  "hover:text-yellow-600 transition-color duration-200 ease-in max-sm:btn max-sm:w-full " +
+                  (isSearchBarActive ? "text-yellow-600" : "")
                 }
                 onClick={() => setIsSearchBarActive(!isSearchBarActive)}
               >
@@ -112,7 +125,7 @@ function CategoryFilters({
       </div>
       <div
         className={`${
-          isSearchBarActive ? 'opacity-100 block' : 'opacity-0 hidden'
+          isSearchBarActive ? "opacity-100 block" : "opacity-0 hidden"
         } transition-all duration-300 ease-in mt-6 `}
       >
         <input

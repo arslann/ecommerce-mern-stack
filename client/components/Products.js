@@ -1,19 +1,22 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import ProductCard from './ProductCard';
-import CategoryFilters from './CategoryFilters';
+import React, { useState } from "react";
+import ProductCard from "./ProductCard";
+import CategoryFilters from "./CategoryFilters";
 
 function Products({ products }) {
   const [filteredProducts, setFilteredProducts] = useState(products);
-  const [searchText, setSearchText] = useState('');
-  const [category, setCategory] = useState('All');
+  const [searchText, setSearchText] = useState("");
+  const [category, setCategory] = useState("All");
 
   // This function filters products based on category
   const filterProductsByCategory = (category) => {
     setCategory(category);
     const filtered = products.filter((product) => {
-      return category === 'All' || product.category === category;
+      return (
+        category === "all" ||
+        product.category.toLowerCase() === category.toLowerCase()
+      );
     });
 
     setFilteredProducts(filtered);
@@ -26,7 +29,9 @@ function Products({ products }) {
     const filtered = products.filter((product) => {
       return (
         product.title.toLowerCase().includes(text.toLowerCase()) &&
-        (category === 'All' ? true : product.category === category)
+        (category === "all"
+          ? true
+          : product.category.toLowerCase() === category.toLowerCase())
       );
     });
 
@@ -42,7 +47,7 @@ function Products({ products }) {
       />
       <div className="mt-8 flex w-full flex-wrap gap-4 justify-start items-center md:justify-center lg:justify-start">
         {filteredProducts.map((el) => (
-          <ProductCard key={el.id} {...el} />
+          <ProductCard {...el} key={el.title} />
         ))}
       </div>
     </div>

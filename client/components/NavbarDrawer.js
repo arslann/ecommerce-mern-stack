@@ -13,6 +13,8 @@ import {
   initializeCartFromLocalStorage,
 } from "@/app/store/cartSlice";
 
+import { BiSolidCart } from "react-icons/bi";
+
 function NavbarDrawer() {
   const cart = useSelector((state) => state.cart);
 
@@ -48,22 +50,26 @@ function NavbarDrawer() {
           htmlFor="my-drawer-4"
           className="drawer-button cursor-pointer hover:text-black"
         >
-          Cart
+          <BiSolidCart size={30} className="sm:hidden" />
+          <span className="hidden sm:block">Cart</span>
         </label>
       </div>
       <div className="drawer-side z-20 ">
         <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
-        <div className="menu w-2/3 md:w-1/2 lg:w-1/3  h-full bg-[#333] text-white pt-10">
+        <div className="menu w-2/3 md:w-1/2 lg:w-1/3  h-full bg-[#333] text-white pt-10 justify-between flex-nowrap">
           {cart.length < 1 ? (
             <h3>No products in the cart</h3>
           ) : (
-            <ul>
+            <ul className="overflow-auto">
               {cart.map((product) => {
                 return (
-                  <li className="max-w-[90%] h-[110px] flex flex-row flex-nowrap justify-start gap-1 border-t border-gray-600 pt-3 mb-4 m-auto">
+                  <li
+                    key={product.id}
+                    className="max-w-[90%] h-[110px] flex flex-row flex-nowrap justify-start gap-1 border-t border-gray-600 pt-3 mb-4 m-auto"
+                  >
                     <div className="w-20 h-full relative">
                       <Link href={`/product/` + product.id}>
-                        <Image src={product.image} fill={true} />
+                        <Image alt="product" src={product.image} fill={true} />
                       </Link>
                     </div>
                     <div className="flex flex-col justify-start items-start relative w-full">
@@ -97,6 +103,14 @@ function NavbarDrawer() {
               })}
             </ul>
           )}
+          <div className="self-center mt-2">
+            <Link
+              href="/checkout"
+              className="btn btn-md max-sm:w-44 sm:btn-wide"
+            >
+              Checkout
+            </Link>
+          </div>
         </div>
       </div>
     </div>

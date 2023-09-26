@@ -13,12 +13,26 @@ function page() {
   const [total, setTotal] = useState(0);
   const [shippingPrice, setSippingPrice] = useState(10);
   const [orderCreated, setOrderCreated] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
 
   const user = useSelector((state) => state.auth.user);
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!orderCreated) return;
+
+    return router.push("/completed");
+  }, [orderCreated]);
+
+  useEffect(() => {
+    let total = 0;
+    cart.forEach((product) => {
+      total += product.price * product.quantity;
+    });
+    setSubTotal(total);
+    setTotal(total + shippingPrice);
+  }, []);
 
   // Initialize state for form fields
   const [formData, setFormData] = useState({
@@ -46,7 +60,7 @@ function page() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!user) {
+    if (!user || isLoading || orderCreated) {
       return;
     }
 
@@ -66,10 +80,11 @@ function page() {
         formData.countryRegion,
       phone: formData.phone,
     };
-
+    setIsLoading(true);
     try {
       const { data } = await createOrder(orderData);
 
+      setIsLoading(false);
       setOrderCreated(true);
 
       // Optionally, you can redirect the user to a confirmation page or perform other actions
@@ -87,24 +102,8 @@ function page() {
     );
   }
 
-  useEffect(() => {
-    // Check if the order has been created and then redirect
-    if (orderCreated) {
-      router.push("/completed"); // Redirect to "/completed"
-    }
-  }, [orderCreated]);
-
-  useEffect(() => {
-    let total = 0;
-    cart.forEach((product) => {
-      total += product.price * product.quantity;
-    });
-    setSubTotal(total);
-    setTotal(total + shippingPrice);
-  }, []);
-
   return (
-    <div className="container mx-auto font-mono px-4 mt-8 flex flex-row gap-6">
+    <div className="container mx-auto font-mono px-4 mt-8 flex flex-col-reverse sm:flex-row gap-6">
       {user ? (
         <div className="flex-1">
           <h1 className="font-bold text-xl mb-4">Billing details</h1>
@@ -195,11 +194,16 @@ function page() {
                 className="border border-gray-300 px-2 py-1"
               />
             </div>
+
             <button
               type="submit"
               className="bg-black text-white text-lg btn hover:bg-gray-800 "
             >
-              Place Order
+              {isLoading ? (
+                <span className="loading loading-spinner loading-sm"></span>
+              ) : (
+                "Place Order"
+              )}
             </button>
           </form>
         </div>
