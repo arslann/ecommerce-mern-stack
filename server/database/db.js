@@ -1,13 +1,13 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+require("dotenv").config();
 
-const db =
-  'mongodb+srv://testuser:testuser@cluster0.p3yoqkc.mongodb.net/?retryWrites=true&w=majority';
+const db = process.env.DB_URL;
 
 const connectDB = async () => {
   try {
     await mongoose.connect(db);
 
-    console.log('MongoDB Connected...');
+    console.log("MongoDB Connected...");
   } catch (error) {
     console.log(error.message);
 
